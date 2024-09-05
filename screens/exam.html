@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Details Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f7;
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://www.sss-solutions.org/wp-content/uploads/2018/01/1116146294-login-page-background-image-112.jpg');
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #004080;
+            margin-bottom: 20px;
+        }
+        .alert {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            color: green;
+        }
+        .alert-danger {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Exam Details Form</h2>
+        <div id="responseMessage" class="alert"></div>
+        <form id="examForm">
+            <div class="form-group">
+                <label for="examCourseCode">Exam Course Code</label>
+                <input type="text" class="form-control" id="examCourseCode" name="examCourseCode" required>
+            </div>
+            <div class="form-group">
+                <label for="examDate">Exam Date</label>
+                <input type="date" class="form-control" id="examDate" name="examDate" required>
+            </div>
+            <div class="form-group">
+                <label for="examCourse">Exam Course</label>
+                <input type="text" class="form-control" id="examCourse" name="examCourse" required>
+            </div>
+            <div class="form-group">
+                <label for="department">Department</label>
+                <input type="text" class="form-control" id="department" name="department" required>
+            </div>
+            <div class="form-group">
+                <label for="timing">Timing</label>
+                <input type="text" class="form-control" id="timing" name="timing" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div class="login-link mt-3">
+            <p>Go back to the <a href="http://localhost:5000/screens/dash/dashboard_instructor.html">Home Page</a></p>
+          </div>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+       document.getElementById('examForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formData = new URLSearchParams(new FormData(this)).toString();
+    
+    fetch('http://localhost:5000/exams', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        var responseMessage = document.getElementById('responseMessage');
+        if (data.error) {
+            responseMessage.className = 'alert alert-danger';
+            responseMessage.textContent = data.error;
+        } else {
+            responseMessage.className = 'alert alert-success';
+            responseMessage.textContent = 'Exam details added successfully! Exam ID: ' + data.id;
+        }
+        responseMessage.style.display = 'block';
+        this.reset();
+    })
+    .catch(error => {
+        var responseMessage = document.getElementById('responseMessage');
+        responseMessage.className = 'alert alert-danger';
+        responseMessage.textContent = 'Error: ' + error.message;
+        responseMessage.style.display = 'block';
+    });
+});
+
+    </script>
+</body>
+</html>

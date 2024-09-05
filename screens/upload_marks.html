@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upload Marks</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f0f4f7;
+      font-family: 'Arial', sans-serif;
+      background-image: url('https://www.sss-solutions.org/wp-content/uploads/2018/01/1116146294-login-page-background-image-112.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #333;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #004080;
+      margin-bottom: 30px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px #ccc;
+    }
+    .form-label {
+      font-weight: bold;
+      color: #004080;
+    }
+    .form-control {
+      border-radius: 5px;
+    }
+    .btn-primary {
+      border-radius: 20px;
+      background-color: #1175d8;
+     
+      border-color: #004080;
+      transition: background-color 0.3s ease-in-out;
+    }
+    .btn-primary:hover {
+      background-color: #002f5f;
+      border-color: #002f5f;
+    }
+    .alert {
+      display: none;
+      margin-bottom: 20px;
+    }
+    .alert-success {
+      color: green;
+    }
+    .alert-danger {
+      color: red;
+    }
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .login-link a {
+      color: #004080;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Upload Marks</h1>
+    <div id="responseMessage" class="alert"></div>
+    <form id="uploadMarksForm">
+      <div class="mb-3">
+        <label for="id" class="form-label">ID</label>
+        <input type="text" class="form-control" id="id" name="id" required>
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="department" class="form-label">Department</label>
+        <input type="text" class="form-control" id="department" name="department" required>
+      </div>
+      <div class="mb-3">
+        <label for="course" class="form-label">Course</label>
+        <input type="text" class="form-control" id="course" name="course" required>
+      </div>
+      <div class="mb-3">
+        <label for="marks" class="form-label">Marks</label>
+        <input type="number" class="form-control" id="marks" name="marks" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="login-link mt-3">
+      <p>Go back to the <a href="http://localhost:5000/screens/dash/dashboard_instructor.html">Home Page</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    document.getElementById('uploadMarksForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var formData = new URLSearchParams(new FormData(this)).toString();
+      fetch('http://localhost:5000/upload-marks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        var responseMessage = document.getElementById('responseMessage');
+        responseMessage.className = 'alert alert-success';
+        responseMessage.textContent = data.message;
+        responseMessage.style.display = 'block';
+        this.reset();
+      })
+      .catch(error => {
+        var responseMessage = document.getElementById('responseMessage');
+        responseMessage.className = 'alert alert-danger';
+        responseMessage.textContent = 'Error: ' + error.message;
+        responseMessage.style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>
