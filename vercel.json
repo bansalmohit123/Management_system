@@ -1,6 +1,6 @@
 {
     "rewrites": [
-      { "source": "/screens/auth/:slug", "destination": "/screens/auth/:slug" }
+      { "source": "/screens/auth/signup_student.html", "destination": "/screens/auth/signup_student.html" }
     ]
   }
   
