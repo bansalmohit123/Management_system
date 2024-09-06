@@ -1,0 +1,6 @@
+{
+    "rewrites": [
+      { "source": "/screens/auth/:slug", "destination": "/screens/auth/:slug" }
+    ]
+  }
+  
