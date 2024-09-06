@@ -4,12 +4,12 @@ const cors = require('cors');
 const path = require('path'); // Import path module
 
 // Import routes
-const studentRouter = require('./server/routes/student');
-const instructorRouter = require('./server/routes/instructor');
-const adminRouter = require('./server/routes/admin');
+const studentRouter = require('../server/routes/student');
+const instructorRouter = require('../server/routes/instructor');
+const adminRouter = require('../server/routes/admin');
 
 // Import database connection
-const connection = require('./server/db');
+const connection = require('../server/db');
 
 const app = express();
 const PORT = 5000;
