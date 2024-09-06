@@ -1,6 +1,27 @@
 {
-    "rewrites": [
-      { "source": "/screens/auth/signup_student.html", "destination": "/screens/auth/signup_student.html" }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/signup_student",
+      "dest": "/auth/signup_student.html"
+    },
+    {
+      "src": "/signup_instructor",
+      "dest": "/auth/signup_instructor.html"
+    },
+    {
+      "src": "/admin_signup",
+      "dest": "/auth/admin_signup.html"
+    }
+  ]
+}
